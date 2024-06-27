@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Employee Directory</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+	<h3>List of employees</h3>
+	<hr>
+	<!-- Add Employee Button -->
+	<a th:href="@{/employees/showFormForAdd}" class="btn btn-primary mb-3">Add employee</a>
+
+	<div th:if="${not #lists.isEmpty(employees)}">
+	<!-- Sort Links -->
+	<div class="mb-3">
+		<a th:href="@{/employees/list(sortField=id,sortOrder=asc)}" class="btn btn-outline-dark me-1">Sort by ID ASC</a>
+		<a th:href="@{/employees/list(sortField=id,sortOrder=desc)}" class="btn btn-outline-dark me-1">Sort by ID DESC</a>
+		<a th:href="@{/employees/list(sortField=firstName,sortOrder=asc)}" class="btn btn-outline-dark me-1">Sort by name ASC</a>
+		<a th:href="@{/employees/list(sortField=firstName,sortOrder=desc)}" class="btn btn-outline-dark me-1">Sort by name DESC</a>
+		<a th:href="@{/employees/list(sortField=lastName,sortOrder=asc)}" class="btn btn-outline-dark me-1">Sort by last name ASC</a>
+		<a th:href="@{/employees/list(sortField=lastName,sortOrder=desc)}" class="btn btn-outline-dark me-1">Sort by last name DESC</a>
+		<a th:href="@{/employees/list(sortField=position,sortOrder=asc)}" class="btn btn-outline-dark me-1">Sort by position ASC</a>
+		<a th:href="@{/employees/list(sortField=position,sortOrder=desc)}" class="btn btn-outline-dark me-1">Sort by position DESC</a>
+		<a th:href="@{/employees/list(sortField=age,sortOrder=asc)}" class="btn btn-outline-dark me-1">Sort by age ASC</a>
+		<a th:href="@{/employees/list(sortField=age,sortOrder=desc)}" class="btn btn-outline-dark me-1">Sort by age DESC</a>
+	</div>
+
+	<!-- Employee List Table -->
+	<h4>Employee list</h4>
+	<!-- Display Total Number of Employees -->
+	<div class="mb-3">
+		Total number of employees: <span th:text="${totalEmployeesCount}"></span>
+	</div>
+
+	<table class="table table-bordered table-striped">
+		<thead class="table-dark">
+		<tr>
+			<th>Id</th>
+			<th>First name</th>
+			<th>Last name</th>
+			<th>Position</th>
+			<th>Age</th>
+			<th>Action</th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- Iterate over the list of employees -->
+		<tr th:each="employee : ${employees}">
+			<td th:text="${employee.id}"></td>
+			<td th:text="${employee.firstName}"></td>
+			<td th:text="${employee.lastName}"></td>
+			<td th:text="${employee.position}"></td>
+			<td th:text="${employee.age}"></td>
+			<td>
+				<!-- Update button link -->
+				<a th:href="@{/employees/showFormForUpdate(employeeId=${employee.id})}" class="btn btn-info btn-sm">Update</a>
+				<!-- Delete button/link -->
+				<a th:href="@{/employees/delete(employeeId=${employee.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+
+	<!-- Position Statistics Table -->
+	<h4>Position statistics</h4>
+	<table class="table table-bordered">
+		<thead class="table-dark">
+		<tr>
+			<th>Position</th>
+			<th>Count of employees</th>
+			<th>Average age</th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- Iterate over positionStatistics and print each row -->
+		<tr th:each="stat : ${positionStatistics}">
+			<td th:text="${stat.position}"></td>
+			<td th:text="${stat.count}"></td>
+			<td th:text="${stat.averageAge}"></td>
+		</tr>
+		</tbody>
+	</table>
+
+	<!-- Age Distribution Table -->
+	<h4>Age distribution</h4>
+	<table class="table table-bordered">
+		<thead class="table-dark">
+		<tr>
+			<th>Age group</th>
+			<th>Count of employees</th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- Iterate over ageDistribution and print each row -->
+		<tr th:each="ageDist : ${ageDistribution}">
+			<td th:text="${ageDist.ageGroup}"></td>
+			<td th:text="${ageDist.count}"></td>
+		</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <title>Save Employee</title>
+</head>
+
+<body>
+<div class="container">
+  <h3>Employee directory</h3>
+  <hr>
+  <p class="h4 mb-4">Save Employee</p>
+  <!-- Form to add or update an employee -->
+
+  <form th:action="@{/employees/save}" th:object="${employee}" method="post">
+    <!-- Hidden field for employee ID (for update) -->
+    <input type="hidden" th:field="*{id}" class="form-control mb-4 w-25">
+    <!-- Input fields for first name, last name, position, and age -->
+
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name</label>
+      <input type="text" th:field="*{firstName}" class="form-control" id="firstName" placeholder="Enter first name" required pattern="[A-Za-z\u00C0-\u024F\u1E00-\u1EFF ]+" title="Only letters and spaces are allowed">
+    </div>
+
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input type="text" th:field="*{lastName}" class="form-control" id="lastName" placeholder="Enter last name" required pattern="[A-Za-z\u00C0-\u024F\u1E00-\u1EFF ]+" title="Only letters and spaces are allowed">
+    </div>
+
+    <div class="mb-3">
+      <label for="position" class="form-label">Position</label>
+      <input type="text" th:field="*{position}" class="form-control" id="position" placeholder="Enter position" required pattern="[A-Za-z\u00C0-\u024F\u1E00-\u1EFF ]+" title="Only letters and spaces are allowed">
+    </div>
+
+    <div class="mb-3">
+      <label for="age" class="form-label">Age</label>
+      <input type="number" th:field="*{age}" class="form-control" id="age" placeholder="Enter age" min="15" max="120" required>
+    </div>
+
+    <!-- Save button -->
+    <button type="submit" class="btn btn-info">Save</button>
+  </form>
+
+  <hr>
+
+  <!-- Back to employees list button -->
+  <a th:href="@{/employees/list}" class="btn btn-primary btn-sm mb-3">
+    Back to employees list
+  </a>
+
+</div>
+</body>
+</html>
